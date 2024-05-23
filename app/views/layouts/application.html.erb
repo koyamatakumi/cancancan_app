@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ourblog</title>
+    <title>CanCanCanBlog</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,12 +13,12 @@
   <body>
     <header class="header">
       <div class="header__title">
-        <%= link_to "Our Blog", root_path , class: "header__title--text" %>
+        <%= link_to "CanCanCanBlog", root_path , class: "header__title--text" %>
       </div>
       </div>
       <div class="header__right">
         <% if user_signed_in? %>
-          <%= link_to current_user.nickname, user_path(current_user), class: "header__right--btn" %>
+          <%= link_to "#{current_user.nickname}さん", user_path(current_user), class: "header__right--btn--name" %><br>
           <%= link_to "新規投稿", new_post_path, class: "header__right--btn" %>
           <%= link_to "ログアウト", destroy_user_session_path, class: "header__right--btn" %>
         <% else %>
