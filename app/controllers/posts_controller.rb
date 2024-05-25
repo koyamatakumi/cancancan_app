@@ -1,5 +1,8 @@
-
 class PostsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+
+
+  
   def index
     @posts = Post.includes(:user)
   end
@@ -10,8 +13,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    if @post.valid?
-      @post.save
+    if @post.save
       redirect_to root_path
     else
       render 'new'
@@ -28,8 +30,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    @post.update(post_params)
-    if @post.valid? #valid?によって、@postが正しく更新されるものなのかどうかを判断している。更新されるものであれば詳細ページに戻り、更新できないものであれば、投稿編集ページに戻っている
+    if @post.update(post_params)
       redirect_to post_path(@post.id)
     else
       render 'edit'
@@ -43,6 +44,7 @@ class PostsController < ApplicationController
   end
 
   private
+
   def post_params
     params.require(:post).permit(:title, :content).merge(user_id: current_user.id)
   end
